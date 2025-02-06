@@ -157,7 +157,7 @@ img{
     padding: 1rem;
 }
 .movie-info .year{
-    font-weight: 500;
+    font-weight: 600;
 }
 .movie-info .rated{
     background-color: #d4aa11;
@@ -167,8 +167,7 @@ img{
     font-weight: 600;
 }
 .movie-info .released{
-    font-size: 0.9rem;
-    opacity: 0.9;
+    font-weight: 600;
 }
 .movie-info .writer{
     padding: 0.5rem;
