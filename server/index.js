@@ -58,3 +58,4 @@ server.listen(PORT, "localhost", (error) => {
     error ? console.log(error) : console.log(`Listening on port ${PORT}`);
 });
 
+//node server/index.js запуск сервера

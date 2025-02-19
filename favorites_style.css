@@ -1,0 +1,139 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #171717;
+    color: #fff;
+}
+
+img {
+    width: 100%;
+    display: block;
+}
+
+.wrapper {
+    min-height: 100vh;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+/* Логотип */
+.logo{
+    padding: 1rem 0;
+    border-bottom: 1px solid #292929;
+}
+
+.logo p {
+    font-size: 2rem;
+    color: #fff;
+    font-weight: bold;
+}
+
+.logo p span {
+    color: #d4aa11;
+}
+
+/* Заголовок страницы */
+h2 {
+    font-size: 2rem;
+    color: #fff;
+    font-weight: 500;
+    padding: 1rem 0;
+}
+
+/* Сетка избранных фильмов */
+.favorites-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 2rem;
+    padding: 2rem 0;
+}
+
+/* Карточка фильма */
+.favorite-movie {
+    background-color: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease;
+}
+
+.favorite-movie:hover {
+    transform: translateY(-5px);
+}
+
+/* Постер фильма */
+.movie-poster img {
+    width: 100%;
+    height: auto;
+    border-bottom: 4px solid #d4aa11;
+}
+
+/* Информация о фильме */
+.movie-info {
+    padding: 1.5rem;
+}
+
+.movie-title {
+    font-size: 1.5rem;
+    color: #292929;
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+
+.movie-misc-info {
+    list-style: none;
+    margin-bottom: 1rem;
+}
+
+.movie-misc-info li {
+    font-size: 0.9rem;
+    color: #292929;
+    margin-bottom: 0.5rem;
+}
+
+.movie-misc-info li b {
+    color: #fff;
+    font-weight: 600;
+}
+
+.genre, .writer, .actors, .plot, .awards {
+    font-size: 0.9rem;
+    color: #ccc;
+    margin-bottom: 0.8rem;
+}
+
+.genre b, .writer b, .actors b, .plot b, .awards b {
+    color: #fff;
+    font-weight: 600;
+}
+
+.awards i {
+    color: #d4aa11;
+    margin-right: 0.5rem;
+}
+
+/* Адаптация для мобильных устройств */
+@media (max-width: 768px) {
+    .favorites-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .movie-info {
+        text-align: center;
+    }
+
+    .movie-misc-info {
+        padding-left: 0;
+    }
+}
