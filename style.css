@@ -196,6 +196,29 @@ img{
     margin: 1rem 0.7rem 0 0;
 }
 
+/* Стили для блока "Добавить в избранное" */
+.add-to-favorites {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.5rem;
+    color: #d4aa11;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 0.5rem;
+    border-radius: 4px;
+}
+
+.add-to-favorites i {
+    font-size: 1.2rem;
+}
+
+.add-to-favorites span {
+    font-size: 1rem;
+    font-weight: 500;
+}
+
 @media (max-width: 450px) {
     .logo p {
         font-size: 1.4rem;
