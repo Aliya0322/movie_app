@@ -129,6 +129,10 @@ img{
     border: 2px solid #1d1d1d;
 }
 
+.hide-search-list{
+    display: none;
+}
+
 
 /* информация о фильме */
 .result-container{

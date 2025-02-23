@@ -25,11 +25,11 @@
         <div class = "search-container">
             <div class = "search-element">
                 <h3>Поиск фильма:</h3>
-                <input type = "text" class = "form-control" placeholder="Введите название фильма ..." id = "movie-search-box">
+                <input type = "text" class = "form-control" placeholder="Введите название фильма ..." id = "movie-search-box" onkeyup="findMovies()">
 
                 <div class = "search-list" id = "search-list">
                     <!-- Выпадающий список-->
-                    <div class = "search-list-item">
+                    <!-- <div class = "search-list-item">
                         <div class = "search-item-thumbnail">
                             <img src = "assets/dune.jpg">
                         </div>
@@ -37,7 +37,7 @@
                             <h3>Дюна</h3>
                             <p>2021</p>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>
@@ -48,9 +48,8 @@
             <div class = "result-container">
                 <div class = "result-grid" id = "result-grid">
                     <!-- информация о фильме -->
-                    <div class="movie-poster">
+                    <!-- <div class="movie-poster">
                         <img src="assets/dune.jpg" alt="movie poster">
-                        <!-- Звездочка и надпись -->
                         <div class="add-to-favorites">
                             <i class="fas fa-star"></i>
                             <span>Добавить в избранное</span>
@@ -68,11 +67,12 @@
                         <p class = "actors"><b>Актеры: </b> Тимоти Шаламе, Ребекка Фергюсон, Оскар Айзек, Джош Бролин, Джейсон Момоа, Зендея.</p>
                         <p class = "plot"><b>Сюжет:</b> Наследник знаменитого дома Атрейдесов Пол отправляется вместе с семьей на одну из самых опасных планет во Вселенной — Арракис. Здесь нет ничего, кроме песка, палящего солнца, гигантских чудовищ и основной причины межгалактических конфликтов — невероятно ценного ресурса, который называется меланж. В результате захвата власти Пол вынужден бежать и скрываться, и это становится началом его эпического путешествия. Враждебный мир Арракиса приготовил для него множество тяжелых испытаний, но только тот, кто готов взглянуть в глаза своему страху, достоин стать избранным.</p>
                         <p class = "awards"><b><i class = "fas fa-award"></i></b>Лауреат 6 премий "Оскар" </p>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>
         <!-- конец контейнера с результатом поиска-->
     </div>
+    <script src="main.js" defer></script>
 </body>
 </html>
