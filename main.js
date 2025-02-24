@@ -1,8 +1,9 @@
 const movieSearchBox = document.getElementById('movie-search-box');
 const searchList = document.getElementById('search-list');
 const resultGrid = document.getElementById('result-grid');
+const addToFavoritesBtn = document.getElementById('add-to-favorites');
 
-// Подключение API
+
 async function loadMovies(searchTerm){
     const URL = `https://www.omdbapi.com/?s=${searchTerm}&page=1&apikey=e15683b`;
     const res = await fetch(URL);
@@ -80,7 +81,6 @@ function displayMovieDetails(details) {
                         <p class = "awards"><b><i class = "fas fa-award"></i></b>${details.Awards}</p>
                     </div>`;
 
-    const addToFavoritesBtn = document.getElementById('add-to-favorites');
     addToFavoritesBtn.addEventListener('click', () => addToFavorites(details));
 }
 
@@ -111,18 +111,38 @@ document.addEventListener('DOMContentLoaded', () => {
         favorites.forEach(movie => {
             const movieElement = document.createElement('div');
             movieElement.classList.add('favorite-movie');
-            movieElement.innerHTML = `<div class="favorite-movie">
-                    <div class="movie-poster">
-                        <img src="${movie.Poster}" alt="${movie.Title}">
-                    </div>
-                    <div class="movie-info">
-                        <h3 class="movie-title">${movie.Title}</h3>
-                        <ul class="movie-misc-info">
-                            <li class="year">Год производства:<br>${movie.Year}</li>
-                        </ul>
-                    </div>`;
+            movieElement.innerHTML = `
+                <div class="movie-poster">
+                    <img src="${movie.Poster}" alt="${movie.Title}">
+                </div>
+                <div class="movie-info">
+                    <h3 class="movie-title">${movie.Title}</h3>
+                    <ul class="movie-misc-info">
+                        <li class="year">Год производства:<br>${movie.Year}</li>
+                    </ul>
+                    <button class="remove-from-favorites" data-id="${movie.imdbID}">Убрать из избранного</button>
+                </div>`;
             favoritesGrid.appendChild(movieElement);
-            movieElement.addEventListener("click", () => loadMovieDetails(movie.imdbID));
+
+            movieElement.addEventListener("click", (event) => {
+                if (!event.target.classList.contains('remove-from-favorites')) {
+                    loadMovieDetails(movie.imdbID);
+                }
+            });
+
+            const removeButton = movieElement.querySelector('.remove-from-favorites');
+            removeButton.addEventListener('click', (event) => {
+                event.stopPropagation(); 
+                removeFromFavorites(movie.imdbID);
+            });
         });
     }
 });
+
+function removeFromFavorites(movieId) {
+    let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+    favorites = favorites.filter(movie => movie.imdbID !== movieId);
+    localStorage.setItem('favorites', JSON.stringify(favorites));
+    alert('Фильм удален из избранного!');
+    location.reload(); // Перезагружаем страницу для обновления списка избранных фильмов
+}

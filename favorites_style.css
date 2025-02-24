@@ -106,20 +106,18 @@ h2 {
     font-weight: 600;
 }
 
-.genre, .writer, .actors, .plot, .awards {
-    font-size: 0.9rem;
-    color: #ccc;
-    margin-bottom: 0.8rem;
+
+.remove-from-favorites {
+    margin-top: 10px; /* Отступ сверху */
+    padding: 5px 10px;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
 }
 
-.genre b, .writer b, .actors b, .plot b, .awards b {
-    color: #fff;
-    font-weight: 600;
-}
-
-.awards i {
-    color: #d4aa11;
-    margin-right: 0.5rem;
+.remove-from-favorites:hover {
+    background-color: #d4aa11;
 }
 
 /* Адаптация для мобильных устройств */
