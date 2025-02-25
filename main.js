@@ -60,39 +60,31 @@ async function loadMovieDetails(movieId){
 }
 
 function displayMovieDetails(details) {
-    resultGrid.innerHTML = `<div class="movie-poster">
-                        <img src = "${(details.Poster != "N/A") ? details.Poster : "assets/image_not_found.png"}" alt = "movie poster">
-                        <div class="add-to-favorites" id="add-to-favorites">
-                            <i class="fas fa-star"></i>
-                            <span>Добавить в избранное</span>
-                        </div>
-                    </div>
-                    <div class = "movie-info">
-                        <h3 class = "movie-title">${details.Title}</h3>
-                        <ul class = "movie-misc-info">
-                            <li class = "year">Year: ${details.Year}</li>
-                            <li class = "rated">Рейтинг:<br>${details.Rated}</li>
-                            <li class = "released">Премьера:<br>${details.Released}</li>
-                        </ul>
-                        <p class = "genre"><b>Жанр:</b> ${details.Genre}</p>
-                        <p class = "writer"><b>Режиссер:</b> ${details.Writer}</p>
-                        <p class = "actors"><b>Актеры: </b> ${details.Actors}</p>
-                        <p class = "plot"><b>Сюжет:</b> ${details.Plot}</p>
-                        <p class = "awards"><b><i class = "fas fa-award"></i></b>${details.Awards}</p>
-                    </div>`;
+    resultGrid.innerHTML = `
+        <div class="movie-poster">
+            <img src="${(details.Poster != "N/A") ? details.Poster : "assets/image_not_found.png"}" alt="movie poster">
+            <div class="add-to-favorites" id="add-to-favorites">
+                <i class="fas fa-star"></i>
+                <span>Добавить в избранное</span>
+            </div>
+        </div>
+        <div class="movie-info">
+            <h3 class="movie-title">${details.Title}</h3>
+            <ul class="movie-misc-info">
+                <li class="year">Year: ${details.Year}</li>
+                <li class="rated">Рейтинг:<br>${details.Rated}</li>
+                <li class="released">Премьера:<br>${details.Released}</li>
+            </ul>
+            <p class="genre"><b>Жанр:</b> ${details.Genre}</p>
+            <p class="writer"><b>Режиссер:</b> ${details.Writer}</p>
+            <p class="actors"><b>Актеры: </b> ${details.Actors}</p>
+            <p class="plot"><b>Сюжет:</b> ${details.Plot}</p>
+            <p class="awards"><b><i class="fas fa-award"></i></b>${details.Awards}</p>
+        </div>`;
 
+    const addToFavoritesBtn = document.getElementById('add-to-favorites');
+    
     addToFavoritesBtn.addEventListener('click', () => addToFavorites(details));
-}
-
-function addToFavorites(movie) {
-    let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
-    if (!favorites.some(fav => fav.imdbID === movie.imdbID)) {
-        favorites.push(movie);
-        localStorage.setItem('favorites', JSON.stringify(favorites));
-        alert(`${movie.Title} добавлен в избранное!`);
-    } else {
-        alert(`${movie.Title} уже в избранном!`);
-    }
 }
 
 window.addEventListener('click', (event) => {
@@ -100,3 +92,15 @@ window.addEventListener('click', (event) => {
         searchList.classList.add('hide-search-list');
     }
 });
+
+function addToFavorites(movie) {
+    let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+    if (!favorites.some(fav => fav.imdbID === movie.imdbID)) {
+        favorites.push(movie);
+        localStorage.setItem('favorites', JSON.stringify(favorites));
+        alert('Фильм добавлен в избранное!');
+    } else {
+        alert('Этот фильм уже в избранном!');
+    }
+}
+

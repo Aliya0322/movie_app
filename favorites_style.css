@@ -43,6 +43,27 @@ img {
     color: #d4aa11;
 }
 
+/* Меню */
+.menu ul {
+    display: flex;
+    gap: 20px;
+    list-style: none; 
+    padding: 0;
+    margin: 0;
+    gap: 20px;
+}
+
+.menu ul li {
+    display: inline-block;
+}
+
+
+.menu a {
+    text-decoration: none; 
+    color: #fff;
+    font-size: 16px;
+}
+
 /* Заголовок страницы */
 h2 {
     font-size: 2rem;
@@ -108,15 +129,16 @@ h2 {
 
 
 .remove-from-favorites {
-    margin-top: 10px; /* Отступ сверху */
+    margin-top: 10px;
     padding: 5px 10px;
-    color: white;
+    color: gray;
     border: none;
     border-radius: 5px;
     cursor: pointer;
 }
 
 .remove-from-favorites:hover {
+    color: #fff;
     background-color: #d4aa11;
 }
 
