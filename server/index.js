@@ -4,7 +4,7 @@ const path = require("path");
 
 const PORT = 3000;
 
-// Объект с MIME-типами для разных расширений файлов
+// Объект с MIME-типами
 const mimeTypes = {
     ".html": "text/html",
     ".css": "text/css",
@@ -17,45 +17,62 @@ const mimeTypes = {
     ".svg": "image/svg+xml",
 };
 
-const server = http.createServer((req, res) => {
-    console.log("Server request received");
-    console.log(req.url, req.method);
+// Маршруты страниц
+const routes = {
+    "/": "../index.html",
+    "/main": "../index.html",
+    "/favorites": "../favorites.html",
+};
 
-    // Игнорируем запросы к favicon.ico
-    if (req.url === "/favicon.ico") {
+const server = http.createServer((req, res) => {
+    console.log(`Запрос: ${req.url}`);
+
+    // Убираем слэш в конце, если есть
+    let urlPath = req.url.replace(/\/$/, "");
+
+    // Игнорируем favicon.ico
+    if (urlPath === "/favicon.ico") {
         res.writeHead(204, { "Content-Type": "image/x-icon" });
         return res.end();
     }
 
-    // Определяем путь к запрашиваемому файлу
-    let filePath = path.join(__dirname, req.url === "/" ? "../index.html" : `../${req.url}`);
+    let filePath;
 
-    // Определяем MIME-тип файла на основе его расширения
+    if (routes[urlPath]) {
+        // Если это один из наших маршрутов, загружаем HTML
+        filePath = path.join(__dirname, routes[urlPath]);
+    } else {
+        // Раздача статических файлов (CSS, JS, изображения и т. д.)
+        filePath = path.join(__dirname, "..", urlPath);
+    }
+
+    // Определяем MIME-тип
     const extname = path.extname(filePath).toLowerCase();
     const contentType = mimeTypes[extname] || "application/octet-stream";
 
-    // Читаем файл
-    fs.readFile(filePath, (err, data) => {
+    // Проверяем, существует ли файл
+    fs.access(filePath, fs.constants.F_OK, (err) => {
         if (err) {
-            if (err.code === "ENOENT") {
-                // Файл не найден
-                res.writeHead(404, { "Content-Type": "text/plain" });
-                res.end("404: File Not Found");
-            } else {
-                // Другая ошибка сервера
+            res.writeHead(404, { "Content-Type": "text/plain" });
+            return res.end("404: File Not Found");
+        }
+
+        // Читаем файл и отправляем клиенту
+        fs.readFile(filePath, (err, data) => {
+            if (err) {
                 res.writeHead(500, { "Content-Type": "text/plain" });
-                res.end("500: Internal Server Error");
+                return res.end("500: Internal Server Error");
             }
-        } else {
-            // Успешный ответ
             res.writeHead(200, { "Content-Type": contentType });
             res.end(data);
-        }
+        });
     });
 });
 
 server.listen(PORT, "localhost", (error) => {
-    error ? console.log(error) : console.log(`Listening on port ${PORT}`);
+    error ? console.log(error) : console.log(`Сервер запущен: http://localhost:${PORT}`);
 });
+
+
 
 //node server/index.js запуск сервера
