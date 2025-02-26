@@ -20,9 +20,10 @@ const mimeTypes = {
 // Маршруты страниц
 const routes = {
     "/": "../index.html",
-    "/main": "../index.html",
-    "/favorites": "../favorites.html",
+    "/main": "../main_page/index.html",
+    "/favorites": "../favorites_page/favorites.html",
 };
+
 
 const server = http.createServer((req, res) => {
     console.log(`Запрос: ${req.url}`);
@@ -30,11 +31,6 @@ const server = http.createServer((req, res) => {
     // Убираем слэш в конце, если есть
     let urlPath = req.url.replace(/\/$/, "");
 
-    // Игнорируем favicon.ico
-    if (urlPath === "/favicon.ico") {
-        res.writeHead(204, { "Content-Type": "image/x-icon" });
-        return res.end();
-    }
 
     let filePath;
 
@@ -45,6 +41,7 @@ const server = http.createServer((req, res) => {
         // Раздача статических файлов (CSS, JS, изображения и т. д.)
         filePath = path.join(__dirname, "..", urlPath);
     }
+    
 
     // Определяем MIME-тип
     const extname = path.extname(filePath).toLowerCase();
