@@ -26,6 +26,7 @@ function findMovies(){
     }
 }
 
+
 function displayMovieList(movies) {
     searchList.innerHTML = "";
     movies.forEach(movie => {
@@ -50,6 +51,17 @@ function displayMovieList(movies) {
         movieListItem.addEventListener("click", () => loadMovieDetails(movie.imdbID));
     });
 }
+
+const debounce = (fn, ms) =>{
+    let timeout;
+    return function () {
+        const fnCall = () => {fn.apply(this, arguments)}
+        clearTimeout(timeout);
+        timeout=setTimeout(fnCall, ms)
+    };
+}
+
+const debouncedFindMovies = debounce(findMovies, 200);
 
 async function loadMovieDetails(movieId){
     searchList.classList.add('hide-search-list');
