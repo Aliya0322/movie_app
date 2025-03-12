@@ -1,74 +1,78 @@
-const http = require("http");
-const fs = require("fs");
-const path = require("path");
+const express = require('express');
+const path = require('path');
+const fs = require('fs');
 
+const app = express();
 const PORT = 3000;
 
-// Объект с MIME-типами
-const mimeTypes = {
-    ".html": "text/html",
-    ".css": "text/css",
-    ".js": "application/javascript",
-    ".json": "application/json",
-    ".png": "image/png",
-    ".jpg": "image/jpeg",
-    ".gif": "image/gif",
-    ".ico": "image/x-icon",
-    ".svg": "image/svg+xml",
-};
+const favoritesFile = path.join(__dirname, 'favorites.json');
 
-// Маршруты страниц
+
+app.use(express.json());
+app.use(express.static(path.join(__dirname, '..')));
+
+
+if (fs.existsSync(favoritesFile)) {
+    favorites = JSON.parse(fs.readFileSync(favoritesFile, 'utf8'));
+}
+
+// Функция для сохранения избранного в файл JSON
+function saveFavorites() {
+    fs.writeFileSync(favoritesFile, JSON.stringify(favorites, null, 2), 'utf8');
+}
+
+// Относительные пути
 const routes = {
-    "/": "../index.html",
-    "/main": "../main_page/index.html",
-    "/favorites": "../favorites_page/favorites.html",
+    "/": "main_page/index.html",
+    "/main": "main_page/index.html",
+    "/favorites": "favorites_page/favorites.html",
 };
 
-
-const server = http.createServer((req, res) => {
-    console.log(`Запрос: ${req.url}`);
-
-    // Убираем слэш в конце, если есть
-    let urlPath = req.url.replace(/\/$/, "");
-
-
-    let filePath;
-
-    if (routes[urlPath]) {
-        // Если это один из наших маршрутов, загружаем HTML
-        filePath = path.join(__dirname, routes[urlPath]);
+// Обработываем маршрут
+app.get(Object.keys(routes), (req, res) => {
+    const routePath = routes[req.path]; 
+    if (routePath) {
+        res.sendFile(path.join(__dirname, '..', routePath));
     } else {
-        // Раздача статических файлов (CSS, JS, изображения и т. д.)
-        filePath = path.join(__dirname, "..", urlPath);
+        res.status(404).send("404: Page Not Found");
     }
-    
-
-    // Определяем MIME-тип
-    const extname = path.extname(filePath).toLowerCase();
-    const contentType = mimeTypes[extname] || "application/octet-stream";
-
-    // Проверяем, существует ли файл
-    fs.access(filePath, fs.constants.F_OK, (err) => {
-        if (err) {
-            res.writeHead(404, { "Content-Type": "text/plain" });
-            return res.end("404: File Not Found");
-        }
-
-        // Читаем файл и отправляем клиенту
-        fs.readFile(filePath, (err, data) => {
-            if (err) {
-                res.writeHead(500, { "Content-Type": "text/plain" });
-                return res.end("500: Internal Server Error");
-            }
-            res.writeHead(200, { "Content-Type": contentType });
-            res.end(data);
-        });
-    });
 });
 
-server.listen(PORT, "localhost", (error) => {
-    error ? console.log(error) : console.log(`Сервер запущен: http://localhost:${PORT}`);
+// Получаем список избранных фильмов
+app.get('/api/favorites', (req, res) => {
+    res.json(favorites);
 });
+
+// Добавляем фильм в избранное
+app.post('/api/favorites', (req, res) => {
+    const movie = req.body;
+    if (!favorites.some(fav => fav.imdbID === movie.imdbID)) {
+        favorites.push(movie);
+        saveFavorites(); 
+        res.status(201).json({ message: 'Фильм добавлен в избранное!' });
+    } else {
+        res.status(400).json({ message: 'Фильм уже в избранном.' });
+    }
+});
+
+// Удаляем фильм из избранного
+app.delete('/api/favorites/:id', (req, res) => {
+    const movieId = req.params.id;
+    favorites = favorites.filter(movie => movie.imdbID !== movieId);
+    saveFavorites(); 
+    res.json({ message: 'Фильм удален из избранного!' });
+});
+
+// Ошибка 404
+app.use((req, res) => {
+    res.status(404).send("404: Page Not Found");
+});
+
+// Запуск сервера
+app.listen(PORT, () => {
+    console.log(`Сервер запущен: http://localhost:${PORT}`);
+});
+
 
 
 

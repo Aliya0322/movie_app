@@ -34,7 +34,7 @@ function displayMovieList(movies) {
         movieListItem.dataset.id = movie.imdbID;
         movieListItem.classList.add('search-list-item');
 
-        let moviePoster = (movie.Poster !== "N/A") ? movie.Poster : "image_not_found.png";
+        let moviePoster = (movie.Poster !== "N/A") ? movie.Poster : "assets/image_not_found.png";
 
         movieListItem.innerHTML = `
         <div class="search-item-thumbnail">
@@ -89,7 +89,7 @@ function displayMovieDetails(details) {
             </ul>
             <p class="genre"><b>Жанр:</b> ${details.Genre}</p>
             <p class="writer"><b>Режиссер:</b> ${details.Writer}</p>
-            <p class="actors"><b>Актеры: </b> ${details.Actors}</p>
+            <p class="actors"><b>Актеры:</b> ${details.Actors}</p>
             <p class="plot"><b>Сюжет:</b> ${details.Plot}</p>
             <p class="awards"><b><i class="fas fa-award"></i></b>${details.Awards}</p>
         </div>`;
@@ -105,14 +105,24 @@ window.addEventListener('click', (event) => {
     }
 });
 
-function addToFavorites(movie) {
-    let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
-    if (!favorites.some(fav => fav.imdbID === movie.imdbID)) {
-        favorites.push(movie);
-        localStorage.setItem('favorites', JSON.stringify(favorites));
-        alert('Фильм добавлен в избранное!');
-    } else {
-        alert('Этот фильм уже в избранном!');
+async function addToFavorites(movie) {
+    try {
+        const response = await fetch('/api/favorites', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                imdbID: movie.imdbID,
+                Title: movie.Title,
+                Year: movie.Year,
+                Poster: movie.Poster
+            })
+        });
+
+        const data = await response.json();
+        alert(data.message);
+    } catch (error) {
+        console.error("Ошибка добавления в избранное:", error);
     }
 }
+
 

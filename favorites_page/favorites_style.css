@@ -76,12 +76,13 @@ h2 {
 .favorites-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 2rem;
+    gap: 1rem;
     padding: 2rem 0;
 }
 
 /* Карточка фильма */
 .favorite-movie {
+    width: 300px;
     background-color: #fff;
     border-radius: 8px;
     overflow: hidden;
@@ -93,19 +94,24 @@ h2 {
 }
 
 /* Постер фильма */
+
 .movie-poster img {
-    width: 100%;
+    width: 300px;
     height: auto;
     border-bottom: 4px solid #d4aa11;
 }
 
 /* Информация о фильме */
 .movie-info {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    width: 300px;
     padding: 1.5rem;
 }
 
 .movie-title {
-    font-size: 1.5rem;
+    font-size: 1rem;
     color: #292929;
     margin-bottom: 1rem;
     font-weight: 600;
@@ -135,6 +141,7 @@ h2 {
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    margin-top: auto;
 }
 
 .remove-from-favorites:hover {
