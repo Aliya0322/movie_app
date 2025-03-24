@@ -1,19 +1,13 @@
+import { loadMovies } from "./loadMovies.js";
+import { loadMovieDetails } from "./loadMovieDetails.js";
+export {displayMovieList, displayMovieDetails, searchList, movieSearchBox}
+
+
+
 const movieSearchBox = document.getElementById('movie-search-box');
 const searchList = document.getElementById('search-list');
 const resultGrid = document.getElementById('result-grid');
 const addToFavoritesBtn = document.getElementById('add-to-favorites');
-
-
-async function loadMovies(searchTerm){
-    const URL = `https://www.omdbapi.com/?s=${searchTerm}&page=1&apikey=e15683b`;
-    const res = await fetch(URL);
-    const data = await res.json();
-    if (data.Response === "True") {
-        displayMovieList(data.Search);
-    } else {
-        console.error("Фильмы не найдены");
-    }
-}
 
 
 function findMovies(){
@@ -55,21 +49,13 @@ function displayMovieList(movies) {
 const debounce = (fn, ms) =>{
     let timeout;
     return function (...args) {
-        let timeout;
         clearTimeout(timeout);
         timeout=setTimeout(()=> fn(...args), ms)
     };
 }
 
-const debouncedFindMovies = debounce(findMovies, 2000);
-
-async function loadMovieDetails(movieId){
-    searchList.classList.add('hide-search-list');
-    movieSearchBox.value = "";
-    const result = await fetch(`https://www.omdbapi.com/?i=${movieId}&apikey=e15683b`);
-    const movieDetails = await result.json();
-    displayMovieDetails(movieDetails);
-}
+const debouncedFindMovies = debounce(findMovies, 1000);
+movieSearchBox.addEventListener('input', debouncedFindMovies);
 
 function displayMovieDetails(details) {
     resultGrid.innerHTML = `
