@@ -1,4 +1,4 @@
-import { loadMovies } from "./loadMovies.js";
+import loadMovies from "./loadMovies.js";
 import { loadMovieDetails } from "./loadMovieDetails.js";
 export {displayMovieList, displayMovieDetails, searchList, movieSearchBox}
 
@@ -54,7 +54,7 @@ const debounce = (fn, ms) =>{
     };
 }
 
-const debouncedFindMovies = debounce(findMovies, 1000);
+const debouncedFindMovies = debounce(findMovies, 500);
 movieSearchBox.addEventListener('input', debouncedFindMovies);
 
 function displayMovieDetails(details) {

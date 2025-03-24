@@ -1,4 +1,4 @@
-export {loadMovies};
+export default loadMovies;
 import { displayMovieList } from "./main.js";
 
 async function loadMovies(searchTerm){
