@@ -54,14 +54,14 @@ function displayMovieList(movies) {
 
 const debounce = (fn, ms) =>{
     let timeout;
-    return function () {
-        const fnCall = () => {fn.apply(this, arguments)}
+    return function (...args) {
+        let timeout;
         clearTimeout(timeout);
-        timeout=setTimeout(fnCall, ms)
+        timeout=setTimeout(()=> fn(...args), ms)
     };
 }
 
-const debouncedFindMovies = debounce(findMovies, 200);
+const debouncedFindMovies = debounce(findMovies, 2000);
 
 async function loadMovieDetails(movieId){
     searchList.classList.add('hide-search-list');
