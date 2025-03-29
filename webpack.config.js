@@ -1,6 +1,7 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const CopyPlugin = require("copy-webpack-plugin");
 
 module.exports = {
   entry: {
@@ -29,7 +30,12 @@ module.exports = {
       template: './favorites_page/favorites.html',
       filename: 'favorites.html',
       chunks: ['favorites']
-    })
+    }),
+    new CopyPlugin({
+      patterns: [
+        { from: "server/favorites.json", to: "api/favorites.json" },
+      ],
+    }),
   ],
   module: {
     rules: [
