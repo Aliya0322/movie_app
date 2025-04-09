@@ -11,16 +11,11 @@ module.exports = {
   output: {
     filename: '[name].bundle.js',
     path: path.resolve(__dirname, 'dist'),
+    publicPath: '/',
   },
   mode: 'development',
-  devServer: {
-    static: {
-      directory: path.join(__dirname, 'dist'),
-    },
-    open: true,
-  },
   plugins: [
-    new CleanWebpackPlugin(),
+    // new CleanWebpackPlugin(), //
     new HtmlWebpackPlugin({
       template: './main_page/index.html',
       filename: 'index.html',
@@ -37,6 +32,11 @@ module.exports = {
       ],
     }),
   ],
+  devServer: {
+    historyApiFallback: true,
+    static: './dist',
+    port: 3000,
+  },
   module: {
     rules: [
       {
@@ -54,4 +54,4 @@ module.exports = {
       }
     ],
   },
- };
+};

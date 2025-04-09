@@ -5,11 +5,9 @@
   "private": true,
   "scripts": {
   "test": "echo \"Error: no test specified\" && exit 1",
-  "start:front": "webpack serve --mode development",
-  "start:back": "node server/index.js",
-  "start": "run-p start:front start:back",
-  "build": "webpack --mode production",
-  "dev": "webpack --mode development"
+  "start": "run-p build:watch start:back",
+  "build:watch": "webpack --watch --mode development",  
+  "start:back": "node server/index.js"
 },
   "repository": {
     "type": "git",

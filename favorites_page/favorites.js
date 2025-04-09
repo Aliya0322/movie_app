@@ -1,4 +1,4 @@
-import '../favorites_page/favorites_style.css';
+import './favorites_style.css';
 
 document.addEventListener('DOMContentLoaded', async () => {
     const favoritesGrid = document.getElementById('favorites-grid');

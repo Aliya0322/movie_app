@@ -1,4 +1,4 @@
-import './style.css'; 
+import './style.css';
 import loadMovies from "./loadMovies.js";
 import { loadMovieDetails } from "./loadMovieDetails.js";
 export {displayMovieList, displayMovieDetails, searchList, movieSearchBox}
